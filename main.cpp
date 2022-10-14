@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <tuple>
 
 class HamiltonianGraph
 {
@@ -48,7 +49,7 @@ public:
         {
             if(nodes[line.targetNodeIdx].searched == false)
             {
-                std::tie(line.expectation_round, line.expectation_oneway) = init(line.targetNodeIdx);
+                std::tie(line.expectation_oneway, line.expectation_round) = init(line.targetNodeIdx);
                 std::cout << "\t" << nodeIdx << " to " << line.targetNodeIdx << " 's exp(oneway) = " << line.expectation_oneway << std::endl;
                 std::cout << "\t" << nodeIdx << " to " << line.targetNodeIdx << " 's exp(round) = " << line.expectation_round << std::endl;
                 
@@ -182,43 +183,7 @@ public:
     {
         std::cout << "findMaxTreeSize(" << startIdx << ")" << std::endl;
         int ans = nodes[startIdx].lines[0].expectation_oneway + 1;
-        std::cout << "\tinitial ans = " << ans << std::endl;
-
-        Node* node = &nodes[startIdx];
-        int nextNodeIdx;
-        do 
-        {
-            int maxExpectation_2nd_global = 0;
-            int maxExpectation_1st = 0;
-            int maxExpectation_2nd = 0;
-            for (const auto& line : node->lines)
-            {
-                if (line.expectation_1 == 0) continue;
-
-                // todo : 처음부터 가장 큰 값이 들어오면 2nd 가 두번째 큰 값을 저장하지 못함
-                if (maxExpectation_1st <= line.expectation_1)
-                {
-                    maxExpectation_2nd = maxExpectation_1st;
-                    maxExpectation_1st = line.expectation_1;
-                } 
-                else 
-                {
-                    maxExpectation_2nd = std::max(maxExpectation_2nd, line.expectation_1);
-                }
-                std::cout << "\t\tmaxExpectation_2nd = " << maxExpectation_2nd << std::endl;
-                
-                if (maxExpectation_1st == line.expectation_1)
-                {
-                    nextNodeIdx = line.targetNodeIdx;
-                }
-            }
-            node = &nodes[nextNodeIdx];
-            maxExpectation_2nd_global = std::max(maxExpectation_2nd_global, maxExpectation_2nd);
-            std::cout << "\tmaxExpectation_2nd_global = " << maxExpectation_2nd_global << std::endl;
-            ans += maxExpectation_2nd_global;
-        } while(node->lines.size() > 1);
-
-        std::cout << "\tfinal ans = " << ans << std::endl;
+        std::cout << "\tans = " << ans << std::endl;
         return ans;
     }
 };
@@ -295,8 +260,6 @@ int main()
                 5   6   8
                     7    
         */
-        // todo : 시작점 찾기에 하자있음
-        // todo : { 시작점 찾기, 시작점에서 정답 도출 } 시 왕복/편도에 따라 다른 기댓값 고려해야함
     }
     
 }
