@@ -95,9 +95,18 @@ public:
             {
                 if (line.expectation_1 == 0) continue;
 
-                maxExpectation_2nd = std::max(maxExpectation_2nd, maxExpectation_1st);
-                maxExpectation_1st = std::max(maxExpectation_1st, line.expectation_1);
+                // todo : 처음부터 가장 큰 값이 들어오면 2nd 가 두번째 큰 값을 저장하지 못함
+                if (maxExpectation_1st <= line.expectation_1)
+                {
+                    maxExpectation_2nd = maxExpectation_1st;
+                    maxExpectation_1st = line.expectation_1;
+                } 
+                else 
+                {
+                    maxExpectation_2nd = std::max(maxExpectation_2nd, line.expectation_1);
+                }
                 std::cout << "\t\tmaxExpectation_2nd = " << maxExpectation_2nd << std::endl;
+                
                 if (maxExpectation_1st == line.expectation_1)
                 {
                     nextNodeIdx = line.targetNodeIdx;
@@ -133,9 +142,11 @@ int solution(std::vector<std::vector<int>> t) {
 
 int main() 
 {
-    //std::vector<std::vector<int>> t = { { 5,1 }, { 2, 5 }, { 3, 5 }, { 3, 6 }, { 2, 4 }, { 4, 0 } };
-    //std::vector<std::vector<int>> t = { { 2, 5 }, { 2, 0 }, { 3, 2 }, { 4, 2 }, { 2, 1 } };
-    std::vector<std::vector<int>> t = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 1, 4 }, { 4, 5 }, { 4, 6 } };
+    //std::vector<std::vector<int>> t = { { 5,1 }, { 2, 5 }, { 3, 5 }, { 3, 6 }, { 2, 4 }, { 4, 0 } }; // 7
+    //std::vector<std::vector<int>> t = { { 2, 5 }, { 2, 0 }, { 3, 2 }, { 4, 2 }, { 2, 1 } }; // 4
+
+    std::vector<std::vector<int>> t = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 1, 4 }, { 4, 5 }, { 4, 6 } }; // 6
+    //std::vector<std::vector<int>> t = { { 0, 1 }, { 1, 2 }, { 0, 3 }, { 3, 4 }, { 3, 5 } }; // 6
     
     std::cout << solution(t) << std::endl;
 }
