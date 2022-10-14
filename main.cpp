@@ -100,7 +100,7 @@ public:
                 return { maxExp_oneway_1st + 1 + maxExp_round_1st, maxExp_round_1st + 1 };
             }
 
-            if (maxExp_oneway_1st + maxExp_round_2nd > maxExp_oneway_2nd + maxExp_round_1st)
+            if (maxExp_oneway_1st + maxExp_round_2nd >= maxExp_oneway_2nd + maxExp_round_1st)
             {
                 return { maxExp_oneway_1st + 1 + maxExp_round_2nd, maxExp_round_1st + 1 };
             }
@@ -113,6 +113,7 @@ public:
 
     int findStartPoint(int nodeIdx)
     {
+        std::cout << "findStartPoint(" << nodeIdx << ")" << std::endl;
         Node* node = &nodes[nodeIdx];
         int nextNodeIdx;
         do 
@@ -165,7 +166,7 @@ public:
                 nextNodeIdx = oneway_1st->targetNodeIdx;
             }
 
-            if (maxExp_oneway_1st + maxExp_round_2nd > maxExp_oneway_2nd + maxExp_round_1st) 
+            if (maxExp_oneway_1st + maxExp_round_2nd >= maxExp_oneway_2nd + maxExp_round_1st) 
             {
                 nextNodeIdx = oneway_1st->targetNodeIdx;
             }
@@ -233,7 +234,7 @@ int main()
                   - 5
         */
     }
-    if (false){
+    if (true){
         std::vector<std::vector<int>> t = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 5 } }; // 6 일직선
         std::cout << solution(t) << " (should 6)\n" << std::endl;
         /*
@@ -242,7 +243,7 @@ int main()
     }
 
     
-    if (false){
+    if (true){
         std::vector<std::vector<int>> t = { { 0, 1 }, { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 5 }, { 2, 6 }, { 6, 7 }, { 3, 8 }, { 8, 9 } }; // 10
         std::cout << solution(t) << " (should 10)\n" << std::endl;
         /*
